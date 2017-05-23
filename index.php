@@ -12,49 +12,9 @@
 	<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
  </head>
  <body>
- 	<header>
- 		<div class="container-fluid ">
- 			<div class="row">
- 				<div class="col-md-12 navbar-fixed-top">
- 					<nav class="navbar navbar-default">
-					    <div class="col-md-2">
-					     	<img class="img-responsive logo" src="img/logo/logo.png">
-					     </div>
-					     	<p class="head_title">Генератор юмора!</p>
-					   	 <div class="col-md-6">
-					   	 	<div class="dropdown">
-							  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Menu
-							  <span class="caret"></span></button>
-							  <ul class="dropdown-menu">
-							    <li ><a href="#">Всё подряд</a></li>
-								<li><a href="#">Раздел 1</a></li>
-								<li><a href="#">Раздел 2</a></li>
-								<li><a href="#">Раздел 3</a></li>
-								<li><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Добавить картинку</button></li>
-							  </ul>
-							  	
-							</div>
-					      <ul class="nav navbar-nav">
-					        <li ><a href="#">Всё подряд</a></li>
-					        <li><a href="#">Раздел 1</a></li>
-					        <li><a href="#">Раздел 2</a></li>
-					        <li><a href="#">Раздел 3</a></li>
-					      	</ul>
-					      </div>
-					      <div class="buttons">
-					      	<!-- Trigger the modal with a button -->
-								<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Добавить картинку</button>
 
-										
-								
+ 	<? require 'Admin/views/header.php';?>
 
-					      </div>
-					</nav>
- 				</div>
- 			</div>	
- 			
- 		</div>
- 	</header>
  	<div class="wrapper">
  			<!-- Modal -->
  		<div id="myModal" class="modal fade" role="dialog">
@@ -110,7 +70,7 @@
  				</div>
  				<div class="fun col-md-8">
  					<h2>title!</h2>
- 					<img src="img/fun/2.jpg">
+ 					<img class="img-rounded" src="img/fun/2.jpg">
  				</div>
  				<div class="fun col-md-8">
  					<h2>title!</h2>
@@ -136,21 +96,15 @@
  				<div class="banner">
  					<img src="img/banner/4-2.jpg">
  				</div>
- 			  </div>	
+ 			  </div>
  			</div>
  		</div>
  	</div>
 
- 	<footer>
- 		<div class="container-fluid">
- 			<div class="row">
- 				<div class="col-md-12">Всё самое свежее и смешное!	&#169; </div>
- 			</div>			
- 		</div>
- 	</footer>
+<?php require 'Admin/views/footer.php';?>
 
  	</div>
- 
+
 <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="js/script.js"></script>
 </body>
