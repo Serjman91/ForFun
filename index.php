@@ -16,87 +16,25 @@
  	<? require 'Admin/views/header.php';?>
 
  	<div class="wrapper">
- 			<!-- Modal -->
- 		<div id="myModal" class="modal fade" role="dialog">
-			<div class="modal-dialog">
+ 		
+ 	<? require 'Admin/views/modal.php';?>
 
-			<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<p class="modal-title">Отправь нам картинку!</p>
-					   </div>
-				<div class="modal-body">
-								  
-					<br>
-					<input type="file" id="exampleInputFile">
-					<h4>или Url</h4>
-					<input type="text" class="form-control" placeholder="Url картинки">
-					<br>
-					<label><input type="radio" name="category" value="">В категорию 1</label>
-					<label><input type="radio" name="category" value="">В категорию 2</label>
-					<label><input type="radio" name="category" value="">В категорию 3</label>
-					<h4>Ну и заголовочек напиши</h4>	
-					<input type="text" class="form-control" placeholder="пиши-пиши">
-											
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-success">Submit</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-				</div>
-
-				</div>
-			</div>
  	<div class="container-fluid">
  		<div class="row">
  			<div class="col-lg-3 col-md-3">
 
- 			  <div id="myScrollspy" class="banner_conteiner">
- 			  	
- 				<div class="banner">
- 					<img src="img/banner/5-1.jpg">
- 				</div>
- 				<div class="banner">
- 					<img src="img/banner/5-2.jpg">
- 				</div>
- 			  </div>
+ 			  <? require 'Admin/views/left_banner.php';?>
  			  
  			</div>
  			<div class="col-lg-6 content" id="content">
- 				<div class="fun col-md-8">
- 					<h2>title!</h2>
- 					<img class="img-rounded" src="img/fun/1.jpg">
- 				</div>
- 				<div class="fun col-md-8">
- 					<h2>title!</h2>
- 					<img class="img-rounded" src="img/fun/2.jpg">
- 				</div>
- 				<div class="fun col-md-8">
- 					<h2>title!</h2>
- 					<img class="img-rounded" src="img/fun/3.jpg">
- 				</div>
- 				<div class="banner_fun fun col-md-8">
- 					<img class="img-rounded" src="img/banner/5-1.jpg">
- 				</div>
- 				<div class="fun col-md-8">
- 					<h2>title!</h2>
- 					<img class="img-rounded" src="img/fun/4.jpg">
- 				</div>
- 				<div class="fun col-md-8">
- 					<h2>title!</h2>
- 					<img class="img-rounded" src="img/fun/5.jpg">
- 				</div>
+ 				
+ 			<? require 'Admin/views/content.php';?>
+
  			</div>
  			<div class="col-lg-3 col-md-3">
- 			 <div class="banner_conteiner">
- 				<div class="banner">
- 					<img src="img/banner/4-1.jpg">
- 				</div>
- 				<div class="banner">
- 					<img src="img/banner/4-2.jpg">
- 				</div>
- 			  </div>
+ 			 
+ 				<? require 'Admin/views/right_banner.php';?>
+
  			</div>
  		</div>
  	</div>

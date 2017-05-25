@@ -1,0 +1,18 @@
+categories.json
+[
+	{
+		"id_category":1,
+		"name":"Категория 1",
+		"file_name":"category_1.json"
+	},
+	{
+		"id_category":1,
+		"name":"Категория 2",
+		"file_name":"category_2.json"
+	},
+	{
+		"id_category":1,
+		"name":"Категория 3",
+		"file_name":"category_3.json"
+	}
+]
