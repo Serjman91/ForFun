@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
 	"email":"mail@mail.com",
 	"title":"ForFun",
 	"password": "qwerty",
 	"icon": "icon.jpg"
+=======
+	"email":"mail@mail.com"
+
+>>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 }
