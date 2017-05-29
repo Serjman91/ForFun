@@ -1,0 +1,17 @@
+[
+	{
+		"id_category":1,
+		"name":"Тачки",
+		"file_name":"category_1.json"
+	},
+	{
+		"id_category":1,
+		"name":"Оружие",
+		"file_name":"category_2.json"
+	},
+	{
+		"id_category":1,
+		"name":"Приколы",
+		"file_name":"category_3.json"
+	}
+]

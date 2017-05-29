@@ -17,15 +17,23 @@ header{
 	z-index: -1;
 }
 .logo{
-	width: 160px;
+	width: 100px;
 }
 .navbar{
 	padding: 10px;
 }
 .navbar p{
-	font-size: 2em;
+	font-size: 1.3em;
 	display: inline-block;
 	float: left;
+	padding-top: px;
+}
+.bth-info{
+	font-size: 12px;
+	padding: 5px;
+}
+.nav li {
+	font-size: 0.7em;
 }
 .nav{
 	font-size: 2em;
