@@ -5,9 +5,10 @@
                 <nav class="navbar navbar-default">
                     <div class="col-md-2">
                         <img class="img-responsive logo" src="img/logo/logo.png">
+                        <p class="head_title">Генератор юмора!</p>
                     </div>
-                    <p class="head_title">Генератор юмора!</p>
-                    <div class="col-md-6">
+
+                    <div class="col-md-4">
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Menu
                                 <span class="caret"></span></button>
@@ -28,15 +29,22 @@
                             <?php }?>
                         </ul>
                     </div>
-                    <div class="buttons">
+
+                    <div class="buttons col-md-2">
                         <!-- Trigger the modal with a button -->
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Добавить картинку</button>
-
-
-
-
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Добавить картинку</button>
+                        <button type="button" class="btn btn-darck" data-toggle="modal" data-target="#myModal2">Контакты</button>
+                    </div>
+                    <div class="col-md-3">
+                        <form class="navbar-form navbar-left">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">Искать</button>
+                        </form>
                     </div>
                 </nav>
+
             </div>
         </div>
 

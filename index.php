@@ -19,6 +19,7 @@
  	<div class="wrapper">
  		
  	<? require 'Admin/views/modal.php';?>
+    <? require 'Admin/views/contactForm.php';?>
 
  	<div class="container-fluid">
  		<div class="row">
