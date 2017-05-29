@@ -1,33 +1,17 @@
-<<<<<<< HEAD
 [
 	{
 		"id_category":1,
 		"name":"РўР°С‡РєРё",
-=======
-categories.json
-[
-	{
-		"id_category":1,
-		"name":"Категория 1",
->>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 		"file_name":"category_1.json"
 	},
 	{
 		"id_category":1,
-<<<<<<< HEAD
 		"name":"РћСЂСѓР¶РёРµ",
-=======
-		"name":"Категория 2",
->>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 		"file_name":"category_2.json"
 	},
 	{
 		"id_category":1,
-<<<<<<< HEAD
 		"name":"РџСЂРёРєРѕР»С‹",
-=======
-		"name":"Категория 3",
->>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 		"file_name":"category_3.json"
 	}
 ]

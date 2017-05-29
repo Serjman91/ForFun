@@ -2,47 +2,27 @@
 	"id_category":1,
 	"items":[
 		{
-<<<<<<< HEAD
 			"title":"Title1",
-=======
-			"title":"Заголовок 1",
->>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 			"image":"1.jpg",
 			"data":154125215
 		},
 		{
-<<<<<<< HEAD
 			"title":"Title1",
-=======
-			"title":"Заголовок 1",
->>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 			"image":"2.jpg",
 			"data":154125215
 		},
 		{
-<<<<<<< HEAD
 			"title":"Title1",
-=======
-			"title":"Заголовок 1",
->>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 			"image":"3.jpg",
 			"data":154125215	
 		},
 		{
-<<<<<<< HEAD
 			"title":"Title1",
-=======
-			"title":"Заголовок 1",
->>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 			"image":"4.jpg",
 			"data":154125215	
 		},
 		{
-<<<<<<< HEAD
 			"title":"Title1",
-=======
-			"title":"Заголовок 1",
->>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 			"image":"5.jpg",
 			"data":154125215	
 		}
@@ -60,11 +40,7 @@
 		},
 		{
 			"position":"center",
-<<<<<<< HEAD
 			"bunner":"right_banner.html"
-=======
-			"bunner":right_banner.html"
->>>>>>> 9b1184254ac99917be48ea41bc1679792966a4d1
 		}
 	]
 }
