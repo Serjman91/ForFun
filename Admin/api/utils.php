@@ -1,12 +1,155 @@
 <?php
 
-    function getCategories() {
-        if (file_exists(CATEGORY)){
-            $data = file_get_contents(CATEGORY);
-            return json_decode($data, true);
+    define("CATEGORY","Admin/DB/categories.json");
+    define("INFO","Admin/DB/info.json");
+    define("CATEGORY_ITEMS","Admin/DB/category_");
+    define('ITEM_VALIDATION_PATH',"../DB/items_validation.csv");
+    define("IMAGES_PATH", "img/fun/");
+    define('IMAGE_MAX_WIDTH',400);
+
+    define('ADMIN_VALIDATION_ITEMS_PATH','DB/items_validation.csv');
+    define('ADMIN_CATEGORIES_ITEMS_PATH','DB/category_');
+    define('ADMIN_CATEGORIES_PATH','DB/categories.json');
+    define('ADMIN_IMAGES_PATH','../img/fun/');
+
+    function validateUser($email,$password){
+        $info = getInfo('DB/info.json');
+        $answer = array("status"=>false);
+        if ($email != $info['email'] or md5($password) != $info['password'] ){
+            $answer["message"] = true;
+        }else{
+            $answer["status"] = true;
         }
-        return "ERROR";
+        return $answer;
     }
+
+    function addItemToValidation($title,$categoryId,$url = null){
+        $image_path = '../../'.IMAGES_PATH;
+        if (isset($url)){
+            if( $image = file_get_contents($url) ) {
+
+                # Генерируем имя tmp-изображения
+                $tmp_file_name = md5(microtime());
+
+                # Сохраняем изображение
+                file_put_contents($tmp_file_name, $image);
+
+                # Очищаем память
+                unset($image);
+
+                $name = uploadImageAndResize($tmp_file_name, $image_path, IMAGE_MAX_WIDTH);
+                return addItemToFile($title,$categoryId, $name);
+            }
+            return false;
+        }else if(isset($_FILES['file'])){
+            $tmp_file_name = $_FILES["file"]['tmp_name'];
+            $name = uploadImageAndResize($tmp_file_name, $image_path, IMAGE_MAX_WIDTH);
+            return addItemToFile($title,$categoryId, $name);
+        }
+        else{
+            return false;
+        }
+    }
+
+    # Функция для загрузки и ресайза изображений
+    function uploadImageAndResize($imageTemp, $imagePath, $maxWidth ){
+        /*
+         * $imageTemp - ссылка на временное изображение
+         * $imagePath - папка, куда сохраняем обработанную картинку
+         * $maxWidth -  ширина картинки
+        */
+
+        # Допустимые расширения
+        $enabled = array( 'png', 'gif', 'jpeg');
+
+        if( $info = getimagesize( $imageTemp ) )
+        {
+            $type = trim( strrchr( $info['mime'], '/' ), '/' );
+
+            # Если тип не подходит
+            if( !in_array( $type, $enabled ) )
+                return false;
+
+            # Исходя из типа формируем названия функций
+            $imageCreateF = 'imagecreatefrom' . $type;
+            $imageSaveF = 'image' . $type;
+            $imageName = md5(microtime()) . '.' . $type;
+
+            # Получаем данные об изображении
+            list( $width, $height ) = $info;
+
+            # Создаём ресурс изображения
+            $src_im = $imageCreateF( $imageTemp );
+
+            # Коэффициент
+            $ratio = $width / $maxWidth;
+
+            # Вычисляем ширину
+            $new_width = $maxWidth;
+
+            # Вычисляем высоту
+            $new_height = $height / $ratio;
+
+            # Создаём новое изображение
+            $dst_im = imagecreatetruecolor($new_width, $new_height);
+
+            # Ресайзим
+            imagecopyresampled( $dst_im, $src_im, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
+
+            # Чистим память
+            unset( $src_im );
+
+            # Сохраняем превьюшку
+            if( !$imageSaveF($dst_im, $imagePath . $imageName ) )
+                return  false;
+
+            # Очищаем память
+            unset( $dst_im );
+
+            # Удалем временный файл
+            unlink( $imageTemp );
+
+            # Возвращаем имя
+            return $imageName;
+        }
+    }
+
+    function addItemToFile($title,$categoryId,$imageName){
+
+        if (file_exists(ITEM_VALIDATION_PATH) && $imageName){
+            $handler = fopen(ITEM_VALIDATION_PATH,'a');
+            $item = array($categoryId,$imageName,$title);
+            fputcsv($handler,$item);
+            fclose($handler);
+            return true;
+        }
+
+        return false;
+    }
+
+    function addItemToCategoryFile($title,$time,$imageName,$id){
+
+        if (file_exists(ADMIN_CATEGORIES_ITEMS_PATH.$id.'.csv') && $imageName){
+            $handler = fopen(ADMIN_CATEGORIES_ITEMS_PATH.$id.'.csv','a');
+            $item = array($imageName,$time,$title);
+            fputcsv($handler,$item);
+            fclose($handler);
+            return true;
+        }
+
+        return false;
+    }
+
+    # Возвращает массив категорий
+    function getAllCategories($path = CATEGORY){
+        if(file_exists($path)){
+            $content = file_get_contents($path);
+            $categories = json_decode($content,true);
+            return $categories;
+        }
+        return "getAllCategories ERROR";
+    }
+
     function getCategoryById($id) {
         if (file_exists(CATEGORY)){
             $data = file_get_contents(CATEGORY);
@@ -17,38 +160,196 @@
                     return $category;
                 }
             }
-            return "file is empty";
+            return "getCategoryById category $id not exists";
         }
-        return "ERROR";
+        return "getCategoryById ERROR";
     };
 
-    function getItemsFromCategoriesId($id, $step = 0, $count = 5) {
-        $startPosition = $step*$count;
-        $endPosition = $startPosition + $count;
-        if (file_exists(CATEGORY_ITEMS.$id.".csv")) {
-            $items = array();
-            $handler = fopen(CATEGORY_ITEMS.$id.".csv", "r");
-            for ($i = 0; $item = fgetcsv($handler); $i++) {
-                if ($i >= $endPosition) {
-                    break;
-                }
-                if ($i >= $startPosition) {
-                    $items[] = $item;
-                }
+    # Создание категории
+    function createCategory($name){
+        $idCategory = getMaxIdCategory()+1;
+        fopen(ADMIN_CATEGORIES_ITEMS_PATH.$idCategory.'.csv','w');
+        $categories = getAllCategories(ADMIN_CATEGORIES_PATH);
+        $categories[]= array(
+            "id"=>$idCategory,
+            "name"=>$name,
+            "count"=>0
+        );
+        $str = json_encode($categories);
+        file_put_contents(ADMIN_CATEGORIES_PATH,$str);
+        return true;
+    }
 
+    # Возвращает максимальный id категорий
+    function getMaxIdCategory(){
+        $categories = getAllCategories(ADMIN_CATEGORIES_PATH);
+        $id = $categories[0]["id"];
+        foreach ($categories as $category){
+            if ($category["id"] > $id){
+                $id = $category["id"];
+            }
+        }
+        return $id;
+    }
+
+    # Переименование категории
+    function renameCategory($id, $newName){
+        $categories = getAllCategories(ADMIN_CATEGORIES_PATH);
+        foreach ($categories as &$category){
+            if($category["id"] == $id){
+                $category["name"] = $newName;
+                break;
+            }
+        }
+        $str = json_encode($categories);
+        file_put_contents(ADMIN_CATEGORIES_PATH,$str);
+        return true;
+    }
+
+    # Удаление категории
+    function deleteCategory($categoryId){
+        $items = getAllItems($categoryId);
+        foreach ($items as $item){
+            unlink(ADMIN_IMAGES_PATH.$item[0]);
+        }
+        unlink(ADMIN_CATEGORIES_ITEMS_PATH.$categoryId.'.csv');
+        $categories = getAllCategories(ADMIN_CATEGORIES_PATH);
+        foreach ($categories as $key=>$category){
+            if($category["id"] == $categoryId){
+                unset($categories[$key]);
+                break;
+            }
+        }
+        $categories = array_values($categories);
+        $str = json_encode($categories);
+        file_put_contents(ADMIN_CATEGORIES_PATH,$str);
+        return true;
+    }
+
+    # Получить все items из валидации csv
+    function getItemsValidation(){
+        $fileName = ADMIN_VALIDATION_ITEMS_PATH;
+        if (file_exists($fileName)){
+            $items = array();
+            $handler = fopen($fileName,"r");
+            while( !feof( $handler)){
+                $items[] = fgetcsv($handler);
             }
             fclose($handler);
             return $items;
         }
-        return "error";
-    };
+        return "getLastItemsCountByStep $fileName ERROR";
+    }
 
-    function getInfo() {
-        if (file_exists(INFO)){
-            $data = file_get_contents(INFO);
-            return json_decode($data, true);
+    # Валидация item
+    function validateItem($imageName,$categoryId,$title){
+        $validationItems = getItemsValidation();
+        foreach ($validationItems as $key=>$validationItem){
+            if ($validationItem[0] == $imageName){
+                unset($validationItems[$key]);
+                break;
+            }
         }
-        return "ERROR";
-    };
+        $validationItems = array_values($validationItems);
+        outputCSV($validationItems);
+        return addItemToCategoryFile($title,time(),$imageName,$categoryId);
+    }
+
+    function outputCSV($validationItems) {
+        $handler = fopen(ADMIN_VALIDATION_ITEMS_PATH, 'w');
+        foreach($validationItems as $item) {
+            fputcsv($handler, $item);
+        }
+        fclose($handler);
+    }
+    # Удаление item
+
+
+
+    function getInfo($path = INFO){
+        if(file_exists($path)){
+            $content = file_get_contents($path);
+            $info = json_decode($content,true);
+            return $info;
+        }
+        return "getInfo ERROR";
+    }
+
+    # Get last 5 items from file csv
+    function getLastItemsCountByStep($categoryId, $count = 5, $step =  0){
+        $fileName = CATEGORY_ITEMS.$categoryId.".csv";
+        if (file_exists($fileName)){
+
+            $items = array();
+            $handler = fopen($fileName,"r");
+            $countLines = 0;
+            while( !feof( $handler)){
+                fgets($handler);
+                $countLines++;
+            }
+            rewind($handler);
+
+            $endPosition = $countLines - $count * $step - 1;
+            $startPosition = $endPosition - $count;
+
+            for ($i=0; $item = fgetcsv($handler); $i++){
+                if ($i >= $endPosition){
+                    break;
+                }
+                if ($i >= $startPosition){
+                    array_unshift($items, $item);
+                }
+            }
+            fclose($handler);
+            return $items;
+        }
+        return "getLastItemsCountByStep $fileName ERROR";
+    }
+
+    # Возвращает массив объектов из sv
+    function getAllItems($categoryId){
+        $fileName = ADMIN_CATEGORIES_ITEMS_PATH.$categoryId.".csv";
+        if (file_exists($fileName)){
+            $items = array();
+            $handler = fopen($fileName,"r");
+            while( !feof( $handler)){
+                $items[] = fgetcsv($handler);
+            }
+            fclose($handler);
+            return $items;
+        }
+        return "getLastItemsCountByStep $fileName ERROR";
+    }
+
+    # Get count lines from file
+    function getCountLinesInFile($filePath){
+        if (file_exists($filePath)){
+            $count = 0;
+            $handler = fopen($filePath, 'r');
+            while( !feof($handler)){
+                fgets($handler);
+                $count++;
+            }
+            fclose( $handler);
+            return $count;
+        }
+        return "getCountLinesInFile error";
+    }
+
+    function sendMessage($name,$text){
+        $info    = getInfo('../DB/info.json');
+        $to      = $info['email'];
+        if ($to){
+            $subject = 'Forfan - сообщение';
+            $message = "Имя: $name \r\nСообщение: $text";
+            $headers = 'From: no-replay@forfan.by'. "\r\n" .
+                'Reply-To: '. $to . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+            mail($to, $subject, $message, $headers);
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 ?>

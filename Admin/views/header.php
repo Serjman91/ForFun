@@ -13,10 +13,10 @@
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Menu
                                 <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li ><a href="/">Всё подряд</a>
+                                <li ><a href="?cat_id=0">Всё подряд</a>
                                 <?php
                                     foreach($categories as $category){?>
-                                        <li><a href=""><?php echo $category["name"];?></a></li>
+                                        <li><a href="?cat_id=<?php echo $category["id_category"];?>"><?php echo $category["name"];?></a></li>
                                    <?php }?>
                                 <li><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Добавить картинку</button></li>
                             </ul>
@@ -25,7 +25,9 @@
                         <ul class="nav navbar-nav">
                             <li ><a href="#">Всё подряд</a></li>
                             <?php foreach($categories as $category){?>
-                                <li><a href=""><?php echo $category["name"];?></a></li>
+                                <li><a href="?cat_id=<?php echo $category["id_category"];?>">
+                                        <?php echo $category["name"];?>
+                                    </a></li>
                             <?php }?>
                         </ul>
                     </div>

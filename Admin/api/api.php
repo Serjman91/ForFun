@@ -1,14 +1,14 @@
 <?php
     require_once 'utils.php';
-    define("CATEGORY","Admin/DB/categories.json");
-    define("INFO","Admin/DB/info.json");
-    define("CATEGORY_ITEMS","Admin/DB/category_");
-    define("IMAGES_PATH", "./img/fun/");
+    
+    // $categoryId = isset($_GET["cat_id"])? $_GET["cat_id"]:0;
 
-    $categories = getCategories();
-    $items = getItemsFromCategoriesId(1);
-    $info = getInfo();
-    $banners = array();
+    // if ($categoryId){
+        $categories = getAllCategories();
+        $items = getLastItemsCountByStep(1);
+        $info = getInfo();
+        $banners = array();
+    // }    
 
 ?>
 

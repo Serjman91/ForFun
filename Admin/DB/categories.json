@@ -5,12 +5,12 @@
 		"file_name":"category_1.json"
 	},
 	{
-		"id_category":1,
+		"id_category":2,
 		"name":"Оружие",
 		"file_name":"category_2.json"
 	},
 	{
-		"id_category":1,
+		"id_category":3,
 		"name":"Приколы",
 		"file_name":"category_3.json"
 	}

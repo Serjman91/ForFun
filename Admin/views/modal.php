@@ -1,32 +1,50 @@
- 			<!-- Modal -->
- 		<div id="myModal" class="modal fade" role="dialog">
-			<div class="modal-dialog">
-
-			<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-							<p class="modal-title">Отправь нам картинку!</p>
-					   </div>
-				<div class="modal-body">
-								  
-					<br>
-					<input type="file" id="exampleInputFile">
-					<h4>или Url</h4>
-					<input type="text" class="form-control" placeholder="Url картинки">
-					<br>
-					<label><input type="radio" name="category" value="">В категорию 1</label>
-					<label><input type="radio" name="category" value="">В категорию 2</label>
-					<label><input type="radio" name="category" value="">В категорию 3</label>
-					<h4>Ну и заголовочек напиши</h4>	
-					<input type="text" class="form-control" placeholder="пиши-пиши">
-											
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-success">Submit</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-				</div>
-
-				</div>
-			</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Добавить картинку</h4>
+            </div>
+            <div class="modal-body">
+                <form id="add_item_form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="control-label">URL картинки</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="radio" aria-label="..." name="radio_status" value="url" checked="checked">
+                            </span>
+                            <input id="add_item_form_url" name="url" type="text" class="form-control" aria-label="..." placeholder="URL картинки">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Загрузить файл</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="radio" value="file" aria-label="..." name="radio_status">
+                            </span>
+                            <input id="input-file" accept="image/jpeg,image/png,image/gif" type="file" name="file" class="form-control" aria-label="...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Категория</label>
+                        <select id="add_item_category" class="form-control" name="category">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="add_item_title" class="control-label">Подпись (не более 300 символов)</label>
+                        <textarea class="form-control" id="add_item_title" placeholder="Подпись" maxlength="300" name="title"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button id="send_new_item" type="button" class="btn btn-success">Отправить</button>
+            </div>
+        </div>
+    </div>
+</div>			
